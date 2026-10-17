@@ -47,6 +47,23 @@ public class StudentService {
     public Student getStudent(String studentNo) throws IOException  {
 		return studentRepository.findByStudentNo(studentNo);
     }
+    // 5. 학생 정보 수정
+    public void updateStudent(String studentNo, String name, String department, String status)
+            throws IOException {
+        // Repository에게 학생 정보 수정 요청
+        studentRepository.updateStudent(studentNo, name, department, status);
+    }
 
+    // 6. 학생 삭제
+    public void deleteStudent(String studentNo) throws IOException {
+        // Repository에게 해당 학번 학생 삭제 요청
+        studentRepository.deleteStudent(studentNo);
+    }
+    
+    // 7. 학생 검색
+    public List<Student> searchStudents(String keyword) throws IOException {
+        // Repository에게 검색어를 전달하여 학번 또는 이름에 해당하는 학생을 검색한다.
+        return studentRepository.searchStudents(keyword);
+    }
 }
 

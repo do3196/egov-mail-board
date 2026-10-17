@@ -18,6 +18,19 @@
 	            등록된 학생 정보를 조회할 수 있습니다.
 	        </p>
 	    </div>
+        <!-- 학생 검색 기능 추가 -->
+        <div class="search-area">
+            <form action="${pageContext.request.contextPath}/student-search.do" method="get">
+                <!-- 검색어 입력 -->
+                <input type="text" id="keyword" name="keyword" value="${keyword}" placeholder="학번 또는 이름을 입력하세요.">
+                <!-- 검색 버튼 -->
+                <button type="submit" class="search-btn">검색</button>
+                <!-- 전체 학생 목록으로 돌아가기 -->
+                <a href="${pageContext.request.contextPath}/students.do" class="all-btn">전체보기
+                </a>
+            </form>
+        </div>
+        <!-- 검색 기능 추가 끝 -->
 	    <div class="toolbar">
 	        <strong>
 	            전체 학생 ${studentCount}명
@@ -35,6 +48,7 @@
 	                    <th>이름</th>
 	                    <th>학과</th>
 	                    <th>상태</th>
+	                    <th>관라</th>
 	                </tr>
 	            </thead>
 	            <tbody>
@@ -59,6 +73,20 @@
 	                                ${student.status}
 	                            </span>
 	                        </td>
+	                        <td>
+						        <!-- 상세보기 -->
+						        <a href="${pageContext.request.contextPath}/student-detail.do?studentNo=${student.studentNo}" class="detail-btn">
+						          상세
+						        </a>
+						        <!-- 학생 수정 -->
+						        <a href="${pageContext.request.contextPath}/student-edit.do?studentNo=${student.studentNo}" class="edit-btn">
+						          수정
+						        </a>
+						        <!-- 학생 삭제 -->
+						        <a href="${pageContext.request.contextPath}/student-delete.do?studentNo=${student.studentNo}" class="delete-btn" onclick="return confirm('정말 삭제하시겠습니까?');">
+						          삭제
+						        </a>
+						    </td>
 	                    </tr>
 	                </c:forEach>
 	            </tbody>

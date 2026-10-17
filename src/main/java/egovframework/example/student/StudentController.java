@@ -99,4 +99,45 @@ public class StudentController {
         // student-detail.jsp 화면으로 이동
         return "student-detail";
     }
+    // 5. 학생 수정 화면
+    @GetMapping("/student-edit.do")
+    public String studentEdit(@RequestParam("studentNo") String studentNo,
+            Model model) throws IOException {
+        //  학번으로 기존 학생 정보 조회
+        Student student = studentService.getStudent(studentNo);
+        // 조회한 학생 정보를 student라는 이름으로 JSP에 전달
+        model.addAttribute("student", student);       
+        return "student-edit"; // student-edit.jsp 화면으로 이동
+    }
+    // 6. 학생 수정 처리
+    @PostMapping("/student-update.do")
+    public String updateStudent(@RequestParam("studentNo") String studentNo,
+            @RequestParam("name") String name, @RequestParam("department") String department,
+            @RequestParam("status") String status) throws IOException {
+        // Service에 학생 정보 수정 요청
+        studentService.updateStudent(studentNo, name, department, status);      
+        return "redirect:/students.do"; // 수정 완료 후 학생 목록으로 이동
+    }
+    // 7. 학생 삭제 처리
+    @GetMapping("/student-delete.do")
+    public String deleteStudent(@RequestParam("studentNo") String studentNo)
+            throws IOException {
+        // Service에 학생 삭제 요청
+        studentService.deleteStudent(studentNo);    
+        return "redirect:/students.do"; // 삭제 완료 후 학생 목록으로 이동
+    }
+    // 8. 학생 검색
+    @GetMapping("/student-search.do")
+    public String searchStudent(@RequestParam("keyword") String keyword, Model model)
+            throws IOException {
+        // StudentService에 검색 요청, 학번 또는 이름으로 검색된 학생 목록을 가져옴.
+        List<Student> students = studentService.searchStudents(keyword);
+        // 검색된 학생 목록을 JSP에 전달
+        model.addAttribute("students", students);
+        // 검색된 학생 수를 JSP에 전달
+        model.addAttribute("studentCount", students.size());
+        // 사용자가 입력한 검색어를 검색창에 그대로 유지하기 위해 전달
+        model.addAttribute("keyword", keyword);
+        return "students"; // 검색 결과를 students.jsp에서 출력
+    }
 }
