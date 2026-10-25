@@ -195,8 +195,7 @@ public class StudentExcelRepository {
         List<Student> result = new ArrayList<>();
         
         for (Student student : students) {// 전체 학생을 한 명씩 확인
-            // 학번에 검색어가 포함되어 있거나 이름에 검색어가 포함되어 있는지 확인
-            if (student.getStudentNo().contains(keyword) || student.getName().contains(keyword) || student.getDepartment().contains(keyword))) {                
+            if (student.getStudentNo().contains(keyword) || student.getName().contains(keyword) || student.getDepartment().contains(keyword)) {                
                 result.add(student); // 검색 조건에 맞는 학생을 검색 결과 List에 추가
             }
         }      

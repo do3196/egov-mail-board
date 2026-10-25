@@ -89,13 +89,22 @@ public class StudentController {
         return "redirect:/students.do";
     }
     // 학생 상세정보 조회
+    // 2026.10.25 학생의 과목별 성적 조회 내용 추가
     @GetMapping("/student-detail.do")
     public String studentDetail(@RequestParam("studentNo") String studentNo, Model model)
             throws IOException {
         // 학번을 이용하여 학생 한 명 조회
         Student student = studentService.getStudent(studentNo);
+        // 학생의 과목별 성적 조회, 2026.10.25
+        List<Score> scores = studentService.getScores(studentNo);
+        // 평균 성적 계산 2026.10.25 - 추가
+        double average = studentService.getAverageScore(studentNo);
         // 조회한 학생 정보를 "student"라는 이름으로 JSP에 전달
         model.addAttribute("student", student);
+        // 성적 목록을 JSP로 전달, JSP에서는 ${scores}로 사용, 2026.10.25
+        model.addAttribute("scores", scores);
+        // 평균을 JSP로 전달 2026.10.25 - 추가
+        model.addAttribute("average", average);
         // student-detail.jsp 화면으로 이동
         return "student-detail";
     }
